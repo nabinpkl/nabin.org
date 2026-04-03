@@ -1,159 +1,78 @@
-# Turborepo starter
+# Modern Next.js Turborepo Stack
 
-This Turborepo starter is maintained by the Turborepo core team.
+A high-performance monorepo scaffolded with the latest web technologies for building interactive, 3D-enabled applications.
 
-## Using this example
+## 🚀 Features
 
-Run the following command:
+- **Turborepo**: Blazing fast monorepo management with intelligent caching.
+- **Next.js 16**: Using the App Router and cutting-edge features.
+- **pnpm**: Fast, disk-space efficient package management.
+- **Tailwind CSS v4**: The latest in utility-first CSS with native cascade layers.
+- **TypeScript**: Type safety across the entire codebase.
+- **Framer Motion**: Smooth, declarative animations for fluid UIs.
+- **Three.js & React Three Fiber**: Interactive 3D graphics integrated seamlessly into React.
 
-```sh
-npx create-turbo@latest
+---
+
+## 📂 Project Structure
+
+- `apps/home`: The main Next.js application with 3D and animation demos.
+- `apps/docs`: Documentation site (Next.js).
+- `packages/ui`: Shared React component library.
+- `packages/eslint-config`: Shared linting rules.
+- `packages/typescript-config`: Shared TypeScript configurations.
+
+---
+
+## 🛠️ Getting Started
+
+### Prerequisites
+
+- Node.js 18+
+- pnpm (Recommended)
+
+### Installation
+
+```bash
+pnpm install
 ```
 
-## What's inside?
+### Development
 
-This Turborepo includes the following packages/apps:
+Run the development server for all apps:
 
-### Apps and Packages
-
-- `docs`: a [Next.js](https://nextjs.org/) app
-- `web`: another [Next.js](https://nextjs.org/) app
-- `@repo/ui`: a stub React component library shared by both `web` and `docs` applications
-- `@repo/eslint-config`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
-- `@repo/typescript-config`: `tsconfig.json`s used throughout the monorepo
-
-Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
-
-### Utilities
-
-This Turborepo has some additional tools already setup for you:
-
-- [TypeScript](https://www.typescriptlang.org/) for static type checking
-- [ESLint](https://eslint.org/) for code linting
-- [Prettier](https://prettier.io) for code formatting
-
-### Build
-
-To build all apps and packages, run the following command:
-
-With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed (recommended):
-
-```sh
-cd my-turborepo
-turbo build
+```bash
+pnpm run dev
 ```
 
-Without global `turbo`, use your package manager:
+To develop only the web app:
 
-```sh
-cd my-turborepo
-npx turbo build
-yarn dlx turbo build
-pnpm exec turbo build
+```bash
+pnpm run dev --filter=web
 ```
 
-You can build a specific package by using a [filter](https://turborepo.dev/docs/crafting-your-repository/running-tasks#using-filters):
+---
 
-With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed:
+## 💅 Styling
 
-```sh
-turbo build --filter=docs
+This project uses **Tailwind CSS v4**. Styles are configured via CSS variables and the `@theme` directive in `apps/web/app/globals.css`.
+
+## 🌌 3D Scenes
+
+Interactive 3D components are located in `apps/web/components/`. They use `@react-three/fiber` and `@react-three/drei` for a robust developer experience.
+
+---
+
+## ⚡ Build & Testing
+
+Build all projects:
+
+```bash
+pnpm run build
 ```
 
-Without global `turbo`:
+Lint all projects:
 
-```sh
-npx turbo build --filter=docs
-yarn exec turbo build --filter=docs
-pnpm exec turbo build --filter=docs
+```bash
+pnpm run lint
 ```
-
-### Develop
-
-To develop all apps and packages, run the following command:
-
-With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed (recommended):
-
-```sh
-cd my-turborepo
-turbo dev
-```
-
-Without global `turbo`, use your package manager:
-
-```sh
-cd my-turborepo
-npx turbo dev
-yarn exec turbo dev
-pnpm exec turbo dev
-```
-
-You can develop a specific package by using a [filter](https://turborepo.dev/docs/crafting-your-repository/running-tasks#using-filters):
-
-With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed:
-
-```sh
-turbo dev --filter=web
-```
-
-Without global `turbo`:
-
-```sh
-npx turbo dev --filter=web
-yarn exec turbo dev --filter=web
-pnpm exec turbo dev --filter=web
-```
-
-### Remote Caching
-
-> [!TIP]
-> Vercel Remote Cache is free for all plans. Get started today at [vercel.com](https://vercel.com/signup?utm_source=remote-cache-sdk&utm_campaign=free_remote_cache).
-
-Turborepo can use a technique known as [Remote Caching](https://turborepo.dev/docs/core-concepts/remote-caching) to share cache artifacts across machines, enabling you to share build caches with your team and CI/CD pipelines.
-
-By default, Turborepo will cache locally. To enable Remote Caching you will need an account with Vercel. If you don't have an account you can [create one](https://vercel.com/signup?utm_source=turborepo-examples), then enter the following commands:
-
-With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed (recommended):
-
-```sh
-cd my-turborepo
-turbo login
-```
-
-Without global `turbo`, use your package manager:
-
-```sh
-cd my-turborepo
-npx turbo login
-yarn exec turbo login
-pnpm exec turbo login
-```
-
-This will authenticate the Turborepo CLI with your [Vercel account](https://vercel.com/docs/concepts/personal-accounts/overview).
-
-Next, you can link your Turborepo to your Remote Cache by running the following command from the root of your Turborepo:
-
-With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed:
-
-```sh
-turbo link
-```
-
-Without global `turbo`:
-
-```sh
-npx turbo link
-yarn exec turbo link
-pnpm exec turbo link
-```
-
-## Useful Links
-
-Learn more about the power of Turborepo:
-
-- [Tasks](https://turborepo.dev/docs/crafting-your-repository/running-tasks)
-- [Caching](https://turborepo.dev/docs/crafting-your-repository/caching)
-- [Remote Caching](https://turborepo.dev/docs/core-concepts/remote-caching)
-- [Filtering](https://turborepo.dev/docs/crafting-your-repository/running-tasks#using-filters)
-- [Configuration Options](https://turborepo.dev/docs/reference/configuration)
-- [CLI Usage](https://turborepo.dev/docs/reference/command-line-reference)

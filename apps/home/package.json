@@ -1,5 +1,5 @@
 {
-  "name": "web",
+  "name": "home",
   "version": "0.1.0",
   "type": "module",
   "private": true,
@@ -11,18 +11,27 @@
     "check-types": "next typegen && tsc --noEmit"
   },
   "dependencies": {
+    "@react-three/drei": "^10.7.7",
+    "@react-three/fiber": "^9.5.0",
     "@repo/ui": "workspace:*",
+    "@types/three": "^0.183.1",
+    "framer-motion": "^12.38.0",
     "next": "16.2.0",
     "react": "^19.2.0",
-    "react-dom": "^19.2.0"
+    "react-dom": "^19.2.0",
+    "three": "^0.183.2"
   },
   "devDependencies": {
     "@repo/eslint-config": "workspace:*",
     "@repo/typescript-config": "workspace:*",
+    "@tailwindcss/postcss": "^4.2.2",
     "@types/node": "^22.15.3",
     "@types/react": "19.2.2",
     "@types/react-dom": "19.2.2",
+    "autoprefixer": "^10.4.27",
     "eslint": "^9.39.1",
+    "postcss": "^8.5.8",
+    "tailwindcss": "^4.2.2",
     "typescript": "5.9.2"
   }
 }
