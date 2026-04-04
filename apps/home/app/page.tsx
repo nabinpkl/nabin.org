@@ -85,7 +85,7 @@ export default function Home() {
 
       {/* Main content */}
       <main className="relative max-w-[1400px] mx-auto px-8 lg:px-16 min-h-screen flex items-center">
-        <div className="flex flex-col lg:flex-row items-center justify-between gap-12 w-full py-20">
+        <div className="flex flex-col lg:flex-row items-center justify-between gap-12 w-full">
           <Hero mouseX={smoothMouseX} mouseY={smoothMouseY} />
           <PlatformApps />
         </div>
