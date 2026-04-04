@@ -84,8 +84,8 @@ export default function Home() {
       <BannerPopup />
 
       {/* Main content */}
-      <main className="relative max-w-[1400px] mx-auto px-8 lg:px-16 min-h-screen flex items-center">
-        <div className="flex flex-col lg:flex-row items-center justify-between gap-12 w-full">
+      <main className="relative max-w-[1400px] mx-auto px-6 md:px-8 lg:px-16 min-h-screen flex flex-col justify-center py-20 lg:py-0">
+        <div className="flex flex-col lg:flex-row items-center lg:items-center justify-between gap-12 lg:gap-20 w-full">
           <Hero mouseX={smoothMouseX} mouseY={smoothMouseY} />
           <PlatformApps />
         </div>

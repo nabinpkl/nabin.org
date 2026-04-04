@@ -11,7 +11,7 @@ interface HeroProps {
 export function Hero({ mouseX, mouseY }: HeroProps) {
   return (
     <TiltCard
-      className="relative max-w-xl flex-shrink-0 cursor-default"
+      className="relative w-full max-w-xl flex-shrink-0 cursor-default text-center lg:text-left mx-auto lg:mx-0"
       tiltMax={8}
       glare={false}
       scale={1.0}
@@ -26,14 +26,14 @@ export function Hero({ mouseX, mouseY }: HeroProps) {
         style={{ transformStyle: "preserve-3d" }}
       >
         <motion.p
-          className="text-xs font-semibold tracking-[0.25em] text-gray-700 uppercase mb-6"
+          className="text-[10px] md:text-xs font-semibold tracking-[0.25em] text-gray-700 uppercase mb-4 md:mb-6"
           style={{ transform: "translateZ(30px)" }}
         >
           Nabin Pokhrel
         </motion.p>
-
+        
         <motion.h1
-          className="text-[2.8rem] md:text-[4rem] lg:text-[4.5rem] font-black leading-[0.92] tracking-[-0.065em] text-gray-950 mb-6"
+          className="text-[2.2rem] sm:text-[2.8rem] md:text-[4rem] lg:text-[4.5rem] font-black leading-[0.95] tracking-[-0.065em] text-gray-950 mb-6"
           style={{ transform: "translateZ(60px)" }}
         >
           Is a
@@ -49,17 +49,17 @@ export function Hero({ mouseX, mouseY }: HeroProps) {
         >
           Practice. Build. Ship. Repeat.
         </motion.p>
-
+        
         <motion.p
-          className="text-base text-gray-800 leading-relaxed mb-4 max-w-xl mt-8"
+          className="text-sm md:text-base text-gray-800 leading-relaxed mb-4 max-w-xl mt-6 md:mt-8 mx-auto lg:mx-0"
           style={{ transform: "translateZ(25px)" }}
         >
-          I am a full-stack developer with a passion for building innovative and user-friendly applications.
-          This is home to products I have worked on actively working.
+          I am a full-stack developer with a passion for building innovative and user-friendly applications. 
+          This is home to products I am actively working on.
         </motion.p>
 
         <motion.p
-          className="text-sm text-gray-700 italic"
+          className="text-[12px] md:text-sm text-gray-700 italic"
           style={{ transform: "translateZ(18px)" }}
         >
           Built for developers, by developer.

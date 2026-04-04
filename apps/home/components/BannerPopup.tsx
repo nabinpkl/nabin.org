@@ -48,23 +48,23 @@ export function BannerPopup() {
 
   return (
     <motion.div
-      className="absolute top-6 right-6 z-10"
+      className="fixed bottom-6 lg:bottom-auto lg:top-6 left-1/2 -translate-x-1/2 lg:left-auto lg:translate-x-0 lg:right-6 z-50 px-4 w-full sm:w-auto flex justify-center lg:block"
     >
       <AnimatePresence mode="wait">
         <motion.div
           key={msgIndex}
-          initial={{ opacity: 0, y: -20, scale: 0.95 }}
+          initial={{ opacity: 0, y: 20, scale: 0.95 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
-          exit={{ opacity: 0, y: -10, scale: 0.98 }}
+          exit={{ opacity: 0, y: 10, scale: 0.98 }}
           transition={{ duration: 0.5, ease: [0.23, 1, 0.32, 1] }}
-          whileHover={{ scale: 1.02, boxShadow: "0 8px 30px rgba(0,0,0,0.06)" }}
-          className="flex items-center gap-3 bg-white/80 backdrop-blur-md border border-gray-200/50 rounded-full px-4 py-2 shadow-sm cursor-default min-w-[300px]"
+          whileHover={{ scale: 1.02, boxShadow: "0 8px 30px rgba(0,0,0,0.08)" }}
+          className="flex items-center gap-3 bg-white/90 backdrop-blur-md border border-gray-200/60 rounded-full px-5 py-2.5 shadow-lg lg:shadow-sm cursor-default min-w-0 sm:min-w-[320px] max-w-[90vw] sm:max-w-none overflow-hidden"
         >
-          <div className="flex items-center gap-3 w-full">
+          <div className="flex items-center gap-3 w-full overflow-hidden">
             <div className="text-gray-950 shrink-0">
               {bannerMessages[msgIndex]?.icon()}
             </div>
-            <span className="text-[13px] text-gray-950 font-extrabold font-[var(--font-plus-jakarta)] tracking-tight whitespace-nowrap">
+            <span className="text-[12px] md:text-[13px] text-gray-950 font-black font-[var(--font-plus-jakarta)] tracking-tight whitespace-nowrap truncate">
               {bannerMessages[msgIndex]?.text}
             </span>
           </div>

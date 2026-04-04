@@ -101,20 +101,20 @@ export function PlatformApps() {
       initial={{ opacity: 0, y: 30 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
-      className="w-full max-w-xl flex-shrink-0"
+      className="w-full max-w-xl mx-auto lg:mx-0 flex-shrink-0"
     >
       <motion.div
-        className="relative rounded-[12px] overflow-hidden bg-white border border-gray-300 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.15)] selection:bg-emerald-100"
+        className="relative rounded-[16px] md:rounded-[12px] overflow-hidden bg-white border border-gray-300 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.15)] selection:bg-emerald-100"
         whileHover={{ scale: 1.01 }}
         transition={{ duration: 0.3, ease: [0.23, 1, 0.32, 1] }}
       >
         <div className="overflow-hidden">
           {/* Card header */}
-          <div className="flex items-center justify-between px-6 py-4 bg-gray-50 border-b border-gray-200">
-            <h2 className="text-[13px] font-black tracking-[0.2em] text-gray-900 uppercase">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between px-6 py-4 bg-gray-50 border-b border-gray-200 gap-2">
+            <h2 className="text-[12px] md:text-[13px] font-black tracking-[0.2em] text-gray-900 uppercase">
               Platform Apps
             </h2>
-            <span className="text-[11px] text-gray-700 font-bold tracking-wider italic">
+            <span className="text-[10px] md:text-[11px] text-gray-700 font-bold tracking-wider italic">
               In Development
             </span>
           </div>
