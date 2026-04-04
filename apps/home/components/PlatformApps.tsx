@@ -5,9 +5,19 @@ import { motion } from "framer-motion";
 import { AlgoIcon, BrainIcon, CraftIcon, LearnIcon, StreamIcon, AuthIcon } from "./icons";
 
 const platformApps = [
-  { name: "Seo/Geo Checker", icon: AlgoIcon, status: "LIVE" },
+  {
+    name: "Seo/Geo Checker",
+    icon: AlgoIcon,
+    status: "LIVE",
+    href: "https://seogeocheck.com",
+  },
   { name: "Knowledge Base", icon: BrainIcon, status: "LIVE" },
-  { name: "Agentic Blogs", icon: CraftIcon, status: "LIVE" },
+  {
+    name: "Agentic Blogs",
+    icon: CraftIcon,
+    status: "LIVE",
+    href: "https://nativeagents.dev",
+  },
   { name: "Learn With Nabin", icon: LearnIcon, status: "COMING SOON" },
   { name: "Stream/Interview", icon: StreamIcon, status: "COMING SOON" },
   { name: "Auth(IDP/IAM server)", icon: AuthIcon, status: "COMING SOON" },
@@ -22,22 +32,8 @@ function AppRow({
 }) {
   const [hovered, setHovered] = useState(false);
 
-  return (
-    <motion.div
-      initial={{ opacity: 0, x: 10 }}
-      animate={{
-        opacity: 1,
-        x: hovered ? 8 : 0
-      }}
-      transition={{
-        x: { duration: 0.3, ease: "easeOut" },
-        opacity: { duration: 0.4, delay: 0.4 + index * 0.08 }
-      }}
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
-      className="relative flex items-center justify-between px-6 py-4 group cursor-default overflow-hidden"
-      style={{ transformStyle: "preserve-3d" }}
-    >
+  const rowContent = (
+    <>
       {/* Animated background fill */}
       <motion.div
         className="absolute inset-0 bg-gradient-to-r from-blue-50/80 via-indigo-50/40 to-transparent rounded-lg"
@@ -82,15 +78,84 @@ function AppRow({
         </motion.span>
       </div>
 
-      <motion.span
+      <div className="relative z-[1] flex items-center gap-1.5 leading-tight">
+        {app.href ? (
+          <motion.span
+            animate={{
+              color: hovered ? "#059669" : "#047857",
+            }}
+            transition={{ duration: 0.25 }}
+            className="inline-flex items-center gap-1.5 text-[11px] font-black tracking-[0.14em] uppercase underline decoration-emerald-400/60 underline-offset-2 hover:decoration-emerald-500 transition-colors"
+          >
+            Live
+            <motion.svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 16 16"
+              fill="currentColor"
+              className="w-3 h-3"
+              animate={{ x: hovered ? 2 : 0, y: hovered ? -1 : 0 }}
+              transition={{ duration: 0.2, ease: "easeOut" }}
+            >
+              <path fillRule="evenodd" d="M4.22 11.78a.75.75 0 0 1 0-1.06L9.44 5.5H5.75a.75.75 0 0 1 0-1.5h5.5a.75.75 0 0 1 .75.75v5.5a.75.75 0 0 1-1.5 0V6.56l-5.22 5.22a.75.75 0 0 1-1.06 0Z" clipRule="evenodd" />
+            </motion.svg>
+          </motion.span>
+        ) : (
+          <motion.span
+            animate={{ opacity: hovered ? 1 : 0.8 }}
+            transition={{ duration: 0.25 }}
+            className="text-[11px] font-black tracking-[0.14em] text-gray-400 uppercase"
+          >
+            {app.status}
+          </motion.span>
+        )}
+      </div>
+    </>
+  );
+
+  if (app.href) {
+    return (
+      <motion.a
+        initial={{ opacity: 0, x: 10 }}
         animate={{
-          opacity: hovered ? 1 : 0.8,
+          opacity: 1,
+          x: hovered ? 8 : 0,
         }}
-        transition={{ duration: 0.25 }}
-        className="relative z-[1] text-[11px] font-black tracking-[0.14em] text-gray-700 uppercase"
+        transition={{
+          x: { duration: 0.3, ease: "easeOut" },
+          opacity: { duration: 0.4, delay: 0.4 + index * 0.08 },
+        }}
+        onMouseEnter={() => setHovered(true)}
+        onMouseLeave={() => setHovered(false)}
+        href={app.href}
+        target="_blank"
+        rel="noreferrer noopener"
+        aria-label={`${app.name} (opens in a new tab)`}
+        title="Opens in a new tab"
+        className="relative flex items-center justify-between px-6 py-4 group overflow-hidden cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400/70 focus-visible:ring-inset"
+        style={{ transformStyle: "preserve-3d" }}
       >
-        {app.status}
-      </motion.span>
+        {rowContent}
+      </motion.a>
+    );
+  }
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, x: 10 }}
+      animate={{
+        opacity: 1,
+        x: hovered ? 8 : 0,
+      }}
+      transition={{
+        x: { duration: 0.3, ease: "easeOut" },
+        opacity: { duration: 0.4, delay: 0.4 + index * 0.08 },
+      }}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      className="relative flex items-center justify-between px-6 py-4 group cursor-default overflow-hidden"
+      style={{ transformStyle: "preserve-3d" }}
+    >
+      {rowContent}
     </motion.div>
   );
 }
