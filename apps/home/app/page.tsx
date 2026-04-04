@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef, useState, useCallback, useEffect } from "react";
-import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
+import { motion, AnimatePresence, useMotionValue, useSpring, useTransform } from "framer-motion";
 
 /* ─────────────── Platform Apps Data ─────────────── */
 
@@ -98,6 +98,8 @@ function TiltCard({
   glare = true,
   scale = 1.02,
   baseTiltX = 0,
+  mouseX,
+  mouseY,
 }: {
   children: React.ReactNode;
   className?: string;
@@ -105,21 +107,56 @@ function TiltCard({
   glare?: boolean;
   scale?: number;
   baseTiltX?: number;
+  mouseX?: any;
+  mouseY?: any;
 }) {
   const ref = useRef<HTMLDivElement>(null);
   const [isHovered, setIsHovered] = useState(false);
 
-  const rotateX = useMotionValue(0);
+  const rotateX = useMotionValue(baseTiltX);
   const rotateY = useMotionValue(0);
   const glareX = useMotionValue(50);
   const glareY = useMotionValue(50);
 
-  const springConfig = { stiffness: 300, damping: 25 };
+  const springConfig = { stiffness: 300, damping: 30 };
   const smoothRotateX = useSpring(rotateX, springConfig);
   const smoothRotateY = useSpring(rotateY, springConfig);
 
+  // If global mouse is provided, drive values from it
+  useEffect(() => {
+    if (mouseX && mouseY) {
+      const unsubscribeX = mouseX.on("change", (v: number) => {
+        // Maps 0..0.5 to -1..1. 
+        const effectiveX = Math.min(v / 0.5, 1);
+        const percentX = effectiveX * 2 - 1;
+        
+        // Weight is 1 for left half, then drops off sharply
+        const weight = v <= 0.5 ? 1 : Math.max(0, 1 - (v - 0.5) * 5);
+        
+        rotateY.set(percentX * tiltMax * weight);
+        
+        const currentYPercent = mouseY.get() * 2 - 1;
+        rotateX.set(-currentYPercent * tiltMax * weight + baseTiltX);
+        
+        glareX.set(effectiveX * 100);
+      });
+      const unsubscribeY = mouseY.on("change", (v: number) => {
+        const xPos = mouseX.get();
+        const weight = xPos <= 0.5 ? 1 : Math.max(0, 1 - (xPos - 0.5) * 5);
+        const percentY = v * 2 - 1;
+        rotateX.set(-percentY * tiltMax * weight + baseTiltX);
+        glareY.set(v * 100);
+      });
+      return () => {
+        unsubscribeX();
+        unsubscribeY();
+      };
+    }
+  }, [mouseX, mouseY, tiltMax, baseTiltX, rotateX, rotateY, glareX, glareY]);
+
   const handleMouseMove = useCallback(
     (e: React.MouseEvent<HTMLDivElement>) => {
+      if (mouseX && mouseY) return; // Ignore local mouse if global is provided
       if (!ref.current) return;
       const rect = ref.current.getBoundingClientRect();
       const centerX = rect.left + rect.width / 2;
@@ -132,10 +169,11 @@ function TiltCard({
       glareX.set(((e.clientX - rect.left) / rect.width) * 100);
       glareY.set(((e.clientY - rect.top) / rect.height) * 100);
     },
-    [rotateX, rotateY, glareX, glareY, tiltMax]
+    [rotateX, rotateY, glareX, glareY, tiltMax, baseTiltX, mouseX, mouseY]
   );
 
   const handleMouseLeave = () => {
+    if (mouseX && mouseY) return;
     rotateX.set(baseTiltX);
     rotateY.set(0);
     setIsHovered(false);
@@ -255,10 +293,53 @@ function AppRow({
   );
 }
 
+const bannerMessages = [
+  {
+    text: "Keep visiting. Big updates are in progress.",
+    icon: () => (
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M13 17l5-5-5-5" /><path d="M6 17l5-5-5-5" /><circle cx="3" cy="12" r="1.5" fill="currentColor" /></svg>
+    )
+  },
+  {
+    text: "Ace your technical interviews with prep kits.",
+    icon: () => (
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" /></svg>
+    )
+  },
+  {
+    text: "Algorithm practice platform coming soon.",
+    icon: () => (
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="16 18 22 12 16 6" /><polyline points="8 6 2 12 8 18" /></svg>
+    )
+  },
+  {
+    text: "Real-time collaborative code streaming.",
+    icon: () => (
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polygon points="5 3 19 12 5 21 5 3" /></svg>
+    )
+  },
+  {
+    text: "Built for developers, by developers.",
+    icon: () => (
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" /></svg>
+    )
+  },
+];
+
 /* ─────────────── Main Page ─────────────── */
 
 export default function Home() {
   const containerRef = useRef<HTMLDivElement>(null);
+  // Current message index for the cycling popup
+  const [msgIndex, setMsgIndex] = useState(0);
+
+  // Cycle through messages
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setMsgIndex((prev) => (prev + 1) % bannerMessages.length);
+    }, 5000);
+    return () => clearInterval(timer);
+  }, []);
 
   // Mouse position for the moving gradient
   const mouseX = useMotionValue(0.5);
@@ -321,7 +402,7 @@ export default function Home() {
   return (
     <div
       ref={containerRef}
-      className="relative min-h-screen overflow-hidden font-[var(--font-geist-sans)] selection:bg-pink-200/60"
+      className="relative min-h-screen overflow-hidden font-[var(--font-plus-jakarta)] selection:bg-pink-200/60"
     >
       {/* Animated background gradient that follows mouse */}
       <motion.div
@@ -371,37 +452,43 @@ export default function Home() {
         <HeartIcon className="text-gray-400" />
       </motion.div>
 
-      {/* Top banner */}
       <motion.div
-        initial={{ opacity: 0, y: -10 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
         className="absolute top-6 right-6 z-10"
       >
-        <motion.div
-          whileHover={{ scale: 1.03, boxShadow: "0 8px 30px rgba(0,0,0,0.08)" }}
-          transition={{ duration: 0.2 }}
-          className="flex items-center gap-2 bg-white/70 backdrop-blur-md border border-gray-200/60 rounded-full px-5 py-2.5 shadow-sm cursor-default"
-        >
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-gray-500">
-            <path d="M2 20h.01" /><path d="M7 20v-4" /><path d="M12 20v-8" /><path d="M17 20V8" />
-          </svg>
-          <span className="text-sm text-gray-700 font-medium">
-            We&apos;ll be with you with awesome features soon.
-          </span>
-        </motion.div>
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={msgIndex}
+            initial={{ opacity: 0, y: -20, scale: 0.95 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: -10, scale: 0.98 }}
+            transition={{ duration: 0.5, ease: [0.23, 1, 0.32, 1] }}
+            whileHover={{ scale: 1.02, boxShadow: "0 8px 30px rgba(0,0,0,0.06)" }}
+            className="flex items-center gap-3 bg-white/80 backdrop-blur-md border border-gray-200/50 rounded-full px-4 py-2 shadow-sm cursor-default min-w-[300px]"
+          >
+            <div className="flex items-center gap-3 w-full">
+              <div className="text-gray-950 shrink-0">
+                {bannerMessages[msgIndex]?.icon()}
+              </div>
+              <span className="text-[13px] text-gray-950 font-extrabold font-[var(--font-plus-jakarta)] tracking-tight whitespace-nowrap">
+                {bannerMessages[msgIndex]?.text}
+              </span>
+            </div>
+          </motion.div>
+        </AnimatePresence>
       </motion.div>
 
       {/* Main content */}
-      <main className="relative max-w-7xl mx-auto px-8 lg:px-16 pt-32 pb-24">
+      <main className="relative max-w-7xl mx-auto px-8 lg:px-16 pt-48 pb-24">
         <div className="flex flex-col lg:flex-row items-start justify-between gap-16">
           {/* Left column: 3D tilt hero text */}
           <TiltCard
             className="relative max-w-xl flex-shrink-0 cursor-default"
-            tiltMax={15}
+            tiltMax={8}
             glare={false}
             scale={1.0}
-            baseTiltX={-5}
+            baseTiltX={-8}
+            mouseX={smoothMouseX}
+            mouseY={smoothMouseY}
           >
             <motion.div
               initial={{ opacity: 0, y: 30 }}
@@ -458,16 +545,14 @@ export default function Home() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
-            className="w-full max-w-sm flex-shrink-0"
+            className="w-full max-w-xl flex-shrink-0"
           >
-            <TiltCard
-              className="relative rounded-2xl overflow-hidden"
-              tiltMax={14}
-              glare={true}
-              scale={1.04}
-              baseTiltX={-3}
+            <motion.div
+              className="relative rounded-2xl overflow-hidden bg-white/60 backdrop-blur-xl border border-gray-200/50 shadow-lg shadow-gray-200/40"
+              whileHover={{ scale: 1.02 }}
+              transition={{ duration: 0.2 }}
             >
-              <div className="bg-white/60 backdrop-blur-xl border border-gray-200/50 rounded-2xl shadow-lg shadow-gray-200/40 overflow-hidden">
+              <div className="overflow-hidden">
                 {/* Card header */}
                 <div className="flex items-center justify-between px-6 pt-6 pb-4">
                   <h2 className="text-xs font-bold tracking-[0.15em] text-gray-800 uppercase">
@@ -485,7 +570,7 @@ export default function Home() {
                   ))}
                 </div>
               </div>
-            </TiltCard>
+            </motion.div>
           </motion.div>
         </div>
       </main>
