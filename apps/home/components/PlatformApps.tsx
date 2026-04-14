@@ -11,16 +11,17 @@ const platformApps = [
     status: "LIVE",
     href: "https://seogeocheck.com",
   },
-  { name: "Knowledge Base", icon: BrainIcon, status: "LIVE" },
   {
-    name: "Agentic Blogs",
+    name: "Technical Blogs",
     icon: CraftIcon,
     status: "LIVE",
     href: "https://nativeagents.dev",
   },
-  { name: "Learn With Nabin", icon: LearnIcon, status: "COMING SOON" },
-  { name: "Stream/Interview", icon: StreamIcon, status: "COMING SOON" },
-  { name: "Auth(IDP/IAM server)", icon: AuthIcon, status: "COMING SOON" },
+  { name: "Domains Discovery Service", icon: StreamIcon, status: "COMING SOON" },
+  { name: "Auth(IDP/IAM Server)", icon: AuthIcon, status: "COMING SOON" },
+  { name: "Waitlist Email Server", icon: AuthIcon, status: "COMING SOON" },
+  { name: "Immutable Ideas (Blockchain)", icon: BrainIcon, status: "COMING SOON" },
+
 ];
 
 function AppRow({
@@ -166,7 +167,7 @@ export function PlatformApps() {
       initial={{ opacity: 0, y: 30 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
-      className="w-full max-w-xl mx-auto lg:mx-0 flex-shrink-0"
+      className="w-full max-w-xl mx-auto lg:mx-0 flex-shrink-0 lg:mt-16 lg:scale-[0.88] lg:origin-top-right"
     >
       <motion.div
         className="relative rounded-[16px] md:rounded-[12px] overflow-hidden bg-white border border-gray-300 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.15)] selection:bg-emerald-100"
