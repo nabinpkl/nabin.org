@@ -2,9 +2,16 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { AlgoIcon, BrainIcon, CraftIcon, LearnIcon, StreamIcon, AuthIcon } from "./icons";
+import { AlgoIcon, BrainIcon, CraftIcon, LearnIcon, StreamIcon, AuthIcon,  } from "./icons";
+import { GlobeIcon } from "lucide-react";
 
 const platformApps = [
+  {
+    name: "Just Get Domain (Free Domain Search)",
+    icon: GlobeIcon,
+    status: "LIVE",
+    href: "https://justgetdomain.com",
+  },
   {
     name: "Seo/Geo Checker",
     icon: AlgoIcon,
@@ -17,10 +24,14 @@ const platformApps = [
     status: "LIVE",
     href: "https://nativeagents.dev",
   },
-  { name: "Domains Discovery Service", icon: StreamIcon, status: "COMING SOON" },
-  { name: "Auth(IDP/IAM Server)", icon: AuthIcon, status: "COMING SOON" },
+  { 
+    name: "Immutable Ideas (Blockchain)", 
+    icon: BrainIcon, 
+    status: "LIVE",
+    href: "https://sunyaideas.xyz", 
+  },
   { name: "Waitlist Email Server", icon: AuthIcon, status: "COMING SOON" },
-  { name: "Immutable Ideas (Blockchain)", icon: BrainIcon, status: "COMING SOON" },
+  { name: "Auth(IDP/IAM Server)", icon: AuthIcon, status: "COMING SOON" },
 
 ];
 
