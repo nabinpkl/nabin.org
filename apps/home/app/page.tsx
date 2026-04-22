@@ -1,11 +1,13 @@
 "use client";
 
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useState } from "react";
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import { Background } from "../components/Background";
 import { BannerPopup } from "../components/BannerPopup";
 import { Hero } from "../components/Hero";
 import { PlatformApps } from "../components/PlatformApps";
+import { HowIWork } from "../components/HowIWork";
+import { CursorFollower } from "../components/CursorFollower";
 
 /* ─────────────── Main Page ─────────────── */
 
@@ -28,17 +30,26 @@ export default function Home() {
   const shadowX = useSpring(pointerX, { stiffness: 40, damping: 25 });
   const shadowY = useSpring(pointerY, { stiffness: 40, damping: 25 });
 
+  const [isHovering, setIsHovering] = useState(false);
+
   // Track global mouse for gradient
   useEffect(() => {
     const handleGlobalMouse = (e: MouseEvent) => {
+      if (!isHovering) setIsHovering(true);
       mouseX.set(e.clientX / window.innerWidth);
       mouseY.set(e.clientY / window.innerHeight);
-      pointerX.set((e.clientX / window.innerWidth) * 100);
-      pointerY.set((e.clientY / window.innerHeight) * 100);
+      pointerX.set(e.clientX);
+      pointerY.set(e.clientY);
     };
+    const handleMouseLeave = () => setIsHovering(false);
+    
     window.addEventListener("mousemove", handleGlobalMouse);
-    return () => window.removeEventListener("mousemove", handleGlobalMouse);
-  }, [mouseX, mouseY, pointerX, pointerY]);
+    window.addEventListener("mouseleave", handleMouseLeave);
+    return () => {
+      window.removeEventListener("mousemove", handleGlobalMouse);
+      window.removeEventListener("mouseleave", handleMouseLeave);
+    };
+  }, [mouseX, mouseY, pointerX, pointerY, isHovering]);
 
   // Derive gradient positions from mouse
   const gradientBg = useTransform(
@@ -59,22 +70,29 @@ export default function Home() {
   // Direct pointer-following spotlight gradient
   const spotlightBg = useTransform(
     [smoothPointerX, smoothPointerY],
-    ([x, y]) =>
-      `radial-gradient(circle 350px at ${x}% ${y}%, rgba(200,255,230,0.4) 0%, rgba(220,255,210,0.2) 40%, transparent 70%)`
+    ([x, y]) => {
+      const px = ((x as number) / (typeof window !== 'undefined' ? window.innerWidth : 1)) * 100;
+      const py = ((y as number) / (typeof window !== 'undefined' ? window.innerHeight : 1)) * 100;
+      return `radial-gradient(circle 350px at ${px}% ${py}%, rgba(200,255,230,0.15) 0%, rgba(220,255,210,0.05) 40%, transparent 70%)`;
+    }
   );
 
   // Large soft shadow following the pointer
   const shadowBg = useTransform(
     [shadowX, shadowY],
-    ([x, y]) =>
-      `radial-gradient(ellipse 800px 600px at ${x}% ${y}%, rgba(0,0,0,0.045) 0%, transparent 70%)`
+    ([x, y]) => {
+      const px = ((x as number) / (typeof window !== 'undefined' ? window.innerWidth : 1)) * 100;
+      const py = ((y as number) / (typeof window !== 'undefined' ? window.innerHeight : 1)) * 100;
+      return `radial-gradient(ellipse 800px 600px at ${px}% ${py}%, rgba(0,0,0,0.02) 0%, transparent 70%)`;
+    }
   );
 
   return (
     <div
       ref={containerRef}
-      className="relative min-h-screen overflow-hidden font-[var(--font-plus-jakarta)] selection:bg-emerald-200/60"
+      className="relative min-h-screen overflow-hidden font-(--font-plus-jakarta) selection:bg-emerald-200/60"
     >
+      <CursorFollower pointerX={pointerX} pointerY={pointerY} isHovering={isHovering} />
       <Background 
         gradientBg={gradientBg} 
         spotlightBg={spotlightBg} 
@@ -84,7 +102,7 @@ export default function Home() {
       <BannerPopup />
 
       {/* Main content */}
-      <main className="relative max-w-[1400px] mx-auto px-6 md:px-8 lg:px-16 min-h-screen flex flex-col justify-center py-20 lg:pt-28 lg:pb-0">
+      <main className="relative max-w-350 mx-auto px-6 md:px-8 lg:px-16 min-h-screen flex flex-col justify-center py-20 lg:pt-28 lg:pb-0">
         <div className="flex flex-col lg:flex-row items-center lg:items-center justify-between gap-12 lg:gap-20 w-full">
           <Hero mouseX={smoothMouseX} mouseY={smoothMouseY} />
           <PlatformApps />
@@ -122,6 +140,32 @@ export default function Home() {
             GitHub
           </a>
         </motion.div>
+
+        {/* Subtle scroll hint — muted caption + arrow, sits in the fold */}
+        <motion.a
+          href="#how-i-work"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.8, ease: "easeOut", delay: 1.1 }}
+          className="group flex flex-col items-center gap-2.5 mt-10 lg:mt-2 text-gray-600 hover:text-gray-900 transition-colors"
+        >
+          <div className="h-px w-16 bg-linear-to-r from-transparent via-gray-500/70 to-transparent" />
+          <span className="text-[10px] font-bold tracking-[0.28em] uppercase">
+            See How I Work
+          </span>
+          <motion.svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 16 16"
+            fill="currentColor"
+            className="w-3.5 h-3.5"
+            animate={{ y: [0, 4, 0] }}
+            transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
+          >
+            <path fillRule="evenodd" d="M8 2a.75.75 0 0 1 .75.75v8.69l3.22-3.22a.75.75 0 1 1 1.06 1.06l-4.5 4.5a.75.75 0 0 1-1.06 0l-4.5-4.5a.75.75 0 1 1 1.06-1.06l3.22 3.22V2.75A.75.75 0 0 1 8 2Z" clipRule="evenodd" />
+          </motion.svg>
+        </motion.a>
+
+        <HowIWork />
       </main>
     </div>
   );

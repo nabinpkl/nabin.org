@@ -29,7 +29,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className="scroll-smooth">
       <link rel="icon" href="/logo7.png" />
       <body className={`${plusJakarta.variable} ${geistSans.variable} ${geistMono.variable}`}>
         {children}

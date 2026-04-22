@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 
 const bannerMessages = [
   {
-    text: "Keep visiting. Big updates are in progress.",
+    text: "I love building tools and solving user frictions.",
     icon: () => (
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M13 17l5-5-5-5" /><path d="M6 17l5-5-5-5" /><circle cx="3" cy="12" r="1.5" fill="currentColor" /></svg>
     )
@@ -23,13 +23,13 @@ const bannerMessages = [
     )
   },
   {
-    text: "Real-time collaborative code streaming.",
+    text: "I live and breathe in product design and development.",
     icon: () => (
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polygon points="5 3 19 12 5 21 5 3" /></svg>
     )
   },
   {
-    text: "Built for developers, by developer.",
+    text: "I love sharing that passion with others.",
     icon: () => (
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" /></svg>
     )

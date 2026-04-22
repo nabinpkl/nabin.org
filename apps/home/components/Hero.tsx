@@ -38,7 +38,7 @@ export function Hero({ mouseX, mouseY }: HeroProps) {
         >
           Is a
           <br />
-          Product
+          Product Mindset
           <br />
           Engineer.
         </motion.h1>
@@ -55,14 +55,14 @@ export function Hero({ mouseX, mouseY }: HeroProps) {
           style={{ transform: "translateZ(25px)" }}
         >
           I am a full-stack developer with a passion for building innovative and user-friendly applications. 
-          This is home to products I am actively working on.
+          This is home to my portfolio where I showcase my projects, share my thoughts on development, and connect with like-minded individuals.
         </motion.p>
 
         <motion.p
           className="text-[12px] md:text-sm text-gray-700 italic"
           style={{ transform: "translateZ(18px)" }}
         >
-          Built for developers, by developer.
+          Open to work and collaboration. Let's work on something amazing together. 
         </motion.p>
       </motion.div>
     </TiltCard>
