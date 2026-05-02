@@ -7,31 +7,32 @@ import { GlobeIcon } from "lucide-react";
 
 const platformApps = [
   {
-    name: "Just Get Domain (Free Domain Search)",
+    name: "Just Get Domain (Hot Memory Diff Engine)",
     icon: GlobeIcon,
     status: "LIVE",
     href: "https://justgetdomain.com",
   },
   {
-    name: "Seo/Geo Checker",
+    name: "Seo/Geo Checker(MCP Tool)",
     icon: AlgoIcon,
     status: "LIVE",
     href: "https://seogeocheck.com",
   },
   {
-    name: "Technical Blogs",
+    name: "Agentic Coding Blogs",
     icon: CraftIcon,
     status: "LIVE",
     href: "https://nativeagents.dev",
   },
   { 
-    name: "Immutable Ideas (Blockchain)", 
+    name: "Immutable Ideas (Simple Idea Storage)", 
     icon: BrainIcon, 
     status: "LIVE",
     href: "https://sunyaideas.xyz", 
   },
   { name: "Waitlist Email Server", icon: AuthIcon, status: "COMING SOON" },
-  { name: "Auth(IDP/IAM Server)", icon: AuthIcon, status: "COMING SOON" },
+  { name: "AML Analysis AI Agent", icon: AuthIcon, status: "COMING SOON" },
+  { name: "Auth(IDP/IAM Server) For AI Agents", icon: AuthIcon, status: "COMING SOON" },
 
 ];
 
