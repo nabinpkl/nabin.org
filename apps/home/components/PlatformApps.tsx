@@ -30,8 +30,13 @@ const platformApps = [
     status: "LIVE",
     href: "https://sunyaideas.xyz", 
   },
-  { name: "Waitlist Email Server", icon: AuthIcon, status: "COMING SOON" },
-  { name: "AML Analysis AI Agent", icon: AuthIcon, status: "COMING SOON" },
+  { 
+    name: "AML Multichain Graph Viz Analysis AI Agent", 
+    icon: BrainIcon, 
+    status: "LIVE",
+    href: "https://github.com/nabinpkl/multi-chain-analysis-agent", 
+  },
+  { name: "Package Admission Agent(Avoid supply chain risks) ", icon: AuthIcon, status: "COMING SOON" },
   { name: "Auth(IDP/IAM Server) For AI Agents", icon: AuthIcon, status: "COMING SOON" },
 
 ];
